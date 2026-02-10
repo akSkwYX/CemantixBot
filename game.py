@@ -4,6 +4,7 @@ from gensim.models import KeyedVectors as kv
 class Game:
    def __init__(self, model_path):
       self.model = kv.load_word2vec_format(model_path, binary=True, unicode_errors="ignore")
+      self.model.fill_norms(force=True)
       self.word = random.choice(self.model.index_to_key)
       self.guessed = []
 
@@ -27,3 +28,6 @@ class Game:
 
    def has_been_guess(self, guess):
       return guess in self.guessed
+
+   def get_vec(self, word):
+      return self.model[word]
